@@ -1,0 +1,72 @@
+Le cache Mozilla est dans:
+C:\Documents and Settings\smarsoll\Local Settings\Application Data\Mozilla\Firefox\Profiles\8gp7661e.default
+la structure:
+http://love-python.blogspot.com/2008/04/read-firefox-cache-with-python.html
+
+
+Read FireFox Cache with Python
+
+Do you know the easiest way to view the disk cache data of your firefox browser? Just paste "about:cache?device=disk" (without the quotes) in the address bar of your firefox browser. If you see it for the first time, you will be amazed.
+
+Anyway, I had to write a program that does similar thing (locate and read firefox cache and show cache data) in Python. First I tried to automate the about:cache mechanism, but couldn't make it. Later I went for processing raw cache data.
+
+In the Cache directory, the files _CACHE_001_, _CACHE_002_, and _CACHE_003_ contain a mix of data and metadata. The metadata contains information such as the URL requested, timestamps, size, and other details. You can view the files (I used VI in my Ubuntu to view those).
+
+The file structure of each _CACHE_00n file is as follows:
+
+
+ ______________________________
+|                              |
+|       4096 byte free         |
+|        block bit-map         |
+|------------------------------|
+|                              |
+|            Blocks            |
+|             ...              |
+|                              |
+|                              |
+|______________________________|
+The size of each block varies depending on the file. 
+_CACHE_001_          256 byte blocks
+_CACHE_002_         1024 byte blocks
+_CACHE_003_         4096 byte blocks
+
+
+Data in the cache is always encoded in a group of 1-4 blocks and always starts exactly on a block boundary (an exact multiple of 256, 1024, or 4096 bytes). For cache data that corresponds to metadata, it is encoded in this very specific data format.
+
+
+      _________________
+0-3  |       magic      |    unsigned int   (0x00010008)   (Big Endian)
+     |------------------| 
+4-7  |    location      |    unsigned int  (Big Endian)
+     |------------------|
+8-11 |    fetchcount    |    unsigned int  (Big Endian)
+     |------------------|
+12-15|    fetchtime     |    unsigned int  (Big Endian)
+     |------------------|
+16-19|    modifytime    |    unsigned int  (Big Endian)
+     |------------------|
+20-23|    expiretime    |    unsigned int  (Big Endian)
+     |------------------|
+24-27|    datasize      |    unsigned int  (Big Endian)
+     |------------------|
+28-31|    requestsize   |    unsigned int  (Big Endian)
+     |------------------|
+32-35|    infosize      |    unsigned int  (Big Endian)
+     |------------------|
+36-  |  request string  |    char[].  Length is determined by
+     |                  |    the value of the requestsize field
+     |       ...        |    above.  Terminated by a \x00 byte.
+     |                  |
+     |                  |
+     |------------------|
+n-   |   info string    |    char[].  Length is determined by
+     |                  |    the value of the infosize field
+     |       ...        |    above. 
+     |                  |
+     |                  |
+     |                  |
+     |__________________|
+
+
+But interestingly I didn't need to use all these knowledge. Just used regular expression to parse the data :-) 

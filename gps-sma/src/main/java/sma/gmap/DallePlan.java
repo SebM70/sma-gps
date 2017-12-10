@@ -1,0 +1,49 @@
+package sma.gmap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * transparente PNG
+ * 
+ * @author smarsoll
+ * 
+ */
+public class DallePlan extends Dalle {
+
+	/** Log4J */
+	private static final Logger sLog = LoggerFactory.getLogger(DallePlan.class);
+
+	public DallePlan(int zoomLevel, int x, int y) {
+		super(zoomLevel, x, y);
+	}
+
+	@Override
+	public String getFileName() {
+		return Dalle.SAVE_PATH + "/p" + this.zoom + "/p" + this.zoom + "_" + this.x + "_" + this.y + ".png";
+	}
+
+	@Override
+	public String getUrlAdress() {
+//		String v = "10";
+//		if (this.zoom < 7) {
+//			v = "23";
+//		}
+		int server = (this.x + this.y + this.zoom) % 4 ;
+		// ok: http://mt1.google.com/mt?n=404&v=w2t.69&hl=fr&x=66&y=51&zoom=10&s=G
+		// ok: http://mt1.google.com/mt?v=w2t.69&x=66&y=51&zoom=10
+		// http://mt0.google.com/mt?zoom=16&x=1&y=1
+		// plan: http://mt0.google.com/mt?zoom=10&x=66&y=51
+		
+		// http://mt1.google.com/mt?v=w2t.69&x=2278&y=1558&zoom=5 => err 404
+		// http://mt2.google.com/mt?n=404&v=w2t.75&hl=fr&x=568&y=387&zoom=7&s=Gal
+		
+		return "http://mt"+server+".google.com/mt?n=404&v=w2.75&x="+ this.x +"&y="+ this.y +"&zoom=" + this.zoom;
+	}
+
+	@Override
+	public String getKeyDalle() {
+		return "P:" + this.zoom + ":" + this.x + ":" + this.y;
+	}
+
+}
