@@ -1,0 +1,55 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+  	<servlet>
+        <servlet-name>guestbook</servlet-name>
+        <servlet-class>sma.web.GuestbookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>guestbook</servlet-name>
+        <url-pattern>/guestbook</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>addtrace</servlet-name>
+        <servlet-class>sma.web.AddTrace</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addtrace</servlet-name>
+        <url-pattern>/addtrace</url-pattern>
+    </servlet-mapping>
+
+   <servlet>
+        <servlet-name>ConvertOziMapToTtqv</servlet-name>
+        <servlet-class>sma.web.servlet.ConvertOziMapToTtqv</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConvertOziMapToTtqv</servlet-name>
+        <url-pattern>/ConvertOziMapToTtqv</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>UploadQu4</servlet-name>
+        <servlet-class>sma.web.servlet.UploadQu4</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadQu4</servlet-name>
+        <url-pattern>/UploadQu4</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>LbcServlet</servlet-name>
+        <servlet-class>sma.lbc.servlet.LbcServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LbcServlet</servlet-name>
+        <url-pattern>/lbc</url-pattern>
+    </servlet-mapping>
+    
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

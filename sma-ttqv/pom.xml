@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>sma</groupId>
+		<artifactId>sma-parent</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+		<relativePath />
+	</parent>
+
+	<artifactId>sma-ttqv</artifactId>
+	<name>${project.artifactId}</name>
+	<packaging>jar</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>sma</groupId>
+			<artifactId>gps-base</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.healthmarketscience.jackcess</groupId>
+			<artifactId>jackcess</artifactId>
+			<version>1.2.7</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>1.7.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Unit test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<properties>
+		<test>sma.AllSmaTtqvTestSuite</test>
+	</properties>
+
+</project>
